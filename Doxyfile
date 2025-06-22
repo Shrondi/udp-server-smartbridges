@@ -1,0 +1,27 @@
+# Doxyfile para UDP SmartBridges
+# Generado automáticamente. Edita según tus necesidades.
+
+# Proyecto
+PROJECT_NAME           = "UDP SmartBridges"
+PROJECT_BRIEF          = "Servidor UDP"
+OUTPUT_DIRECTORY       = docs
+CREATE_SUBDIRS         = YES
+OUTPUT_LANGUAGE        = Spanish
+INPUT                  = src include config
+FILE_PATTERNS          = *.c *.h
+RECURSIVE              = NO
+EXTRACT_ALL            = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+QUIET                  = YES
+WARN_IF_UNDOCUMENTED   = YES
+
+# HTML
+HTML_OUTPUT            = html
+HTML_COLORSTYLE_HUE    = 220
+HTML_COLORSTYLE_SAT    = 100
+HTML_COLORSTYLE_GAMMA  = 80
+
+# Otros ajustes útiles
+FULL_PATH_NAMES        = NO
+STRIP_FROM_PATH        = src include config
