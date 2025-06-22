@@ -2,6 +2,8 @@
 # Módulo para gestionar la base de datos de sensores
 
 import sqlite3
+import csv
+import os
 from contextlib import contextmanager
 
 DB_NAME = 'devices.db'
@@ -24,6 +26,36 @@ def sensor_exists(sensor_id):
         cursor = conn.cursor()
         cursor.execute("SELECT 1 FROM sensors WHERE id = ?", (sensor_id,))
         return cursor.fetchone() is not None
+        
+def insertar_sensores_desde_archivo(ruta_archivo):
+    if not os.path.exists(ruta_archivo):
+        print(f"[!] El archivo '{ruta_archivo}' no existe.")
+        return
+
+    with open(ruta_archivo, newline='', encoding='utf-8') as csvfile:
+        lector = csv.DictReader(csvfile)
+        insertados = 0
+        fallidos = 0
+        for fila in lector:
+            try:
+                sensor_data = {
+                    "id": int(fila["id"]),
+                    "name": fila["name"],
+                    "firmware_version": fila["firmware_version"],
+                    "scale": int(fila["scale"]),
+                    "frequency": int(fila["frequency"]),
+                    "threshold_stdv": float(fila["threshold_stdv"]),
+                    "enable": int(fila["enable"])
+                }
+                if insertar_sensor(sensor_data):
+                    insertados += 1
+                else:
+                    fallidos += 1
+            except Exception as e:
+                print(f"[!] Error al procesar fila: {fila} — {e}")
+                fallidos += 1
+
+    print(f"\nSe insertaron correctamente {insertados} sensores. {fallidos} fallaron.\n")
 
 def insertar_sensor(sensor_data):
     if sensor_exists(sensor_data['id']):
@@ -154,6 +186,7 @@ def mostrar_menu():
   6. Deshabilitar todos los sensores
   7. Modificar versión de firmware de todos
 -----------------------------------------------
+  8. Insertar sensores desde archivo CSV
   0. Salir
 ===============================================
 """)
@@ -206,6 +239,9 @@ def menu():
             deshabilitar_todos()
         elif opcion == '7':
             modificar_firmware_todos()
+        elif opcion == '8':
+            ruta = input("  Introduce la ruta del archivo CSV: ").strip()
+            insertar_sensores_desde_archivo(ruta)
         elif opcion == '0':
             print("\nSaliendo... ¡Hasta luego!\n")
             break
@@ -214,4 +250,3 @@ def menu():
 
 if __name__ == "__main__":
     menu()
-
