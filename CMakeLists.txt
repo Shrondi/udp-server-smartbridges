@@ -14,9 +14,9 @@ set(SOURCES
     config/udp_config.c
 )
 
-add_executable(main ${SOURCES})
-target_link_libraries(main sqlite3)
-target_compile_options(main PRIVATE -Wall -Wextra -Wpedantic)
+add_executable(UDPServer ${SOURCES})
+target_link_libraries(UDPServer sqlite3)
+target_compile_options(UDPServer PRIVATE -Wall -Wextra -Wpedantic)
 
 # --- Generación automática de documentación con Doxygen usando Doxyfile existente ---
 find_package(Doxygen QUIET)
@@ -38,7 +38,7 @@ if(DOXYGEN_FOUND)
     add_custom_target(doc ALL
         DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/docs/html/index.html
     )
-    add_dependencies(main doc)
+    add_dependencies(UDPServer doc)
 else()
     message(STATUS "Doxygen no encontrado. El objetivo 'doc' no estará disponible.")
 endif()
