@@ -133,7 +133,42 @@ Funciones</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
 <div class="textblock"><p>Declaraciones para el manejo de peticiones UDP. </p>
 <dl class="section author"><dt>Autor</dt><dd>Carlos Lucena Robles </dd></dl>
-<dl class="section date"><dt>Fecha</dt><dd>2025-06-21 </dd></dl>
+<dl class="section date"><dt>Fecha</dt><dd>2025-06-21</dd></dl>
+<h1><a class="anchor" id="formato_trama_entrada"></a>
+Formato de trama de entrada (UDP)</h1>
+<p>La trama recibida debe tener el siguiente formato (mínimo 35 bytes):</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Offset   </th><th class="markdownTableHeadNone">Tamaño   </th><th class="markdownTableHeadNone">Campo   </th><th class="markdownTableHeadNone">Descripción    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">31   </td><td class="markdownTableBodyNone">version   </td><td class="markdownTableBodyNone">Versión de firmware (string)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">32   </td><td class="markdownTableBodyNone">2   </td><td class="markdownTableBodyNone">sensorId   </td><td class="markdownTableBodyNone">ID del sensor (uint16_t)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">34   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">statusCode   </td><td class="markdownTableBodyNone">Código de estado (uint8_t)   </td></tr>
+</table>
+<h1><a class="anchor" id="formato_trama_salida"></a>
+Formato de trama de salida (UDP)</h1>
+<p>La respuesta enviada tiene el siguiente formato (55 bytes):</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Offset   </th><th class="markdownTableHeadNone">Tamaño   </th><th class="markdownTableHeadNone">Campo   </th><th class="markdownTableHeadNone">Descripción    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">31   </td><td class="markdownTableBodyNone">firmwareVersion   </td><td class="markdownTableBodyNone">Versión de firmware (string)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">32   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">frequency   </td><td class="markdownTableBodyNone">Frecuencia (uint8_t)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">33   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">scale   </td><td class="markdownTableBodyNone">Escala (uint8_t)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">34   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">enable   </td><td class="markdownTableBodyNone">Habilitado (uint8_t)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">35   </td><td class="markdownTableBodyNone">4   </td><td class="markdownTableBodyNone">thresholdStdv   </td><td class="markdownTableBodyNone">Umbral (float)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">39   </td><td class="markdownTableBodyNone">8   </td><td class="markdownTableBodyNone">secs   </td><td class="markdownTableBodyNone">Timestamp (segundos, uint64_t)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">47   </td><td class="markdownTableBodyNone">8   </td><td class="markdownTableBodyNone">usecs   </td><td class="markdownTableBodyNone">Timestamp (microsegundos, uint64_t)   </td></tr>
+</table>
+<p>Ver detalles y uso en <a class="el" href="../../d1/d4f/udp__handler_8c.html" title="Implementación del manejo de peticiones UDP para el servidor SmartBridges.">udp_handler.c</a> </p>
 </div><h2 class="groupheader">Documentación de funciones</h2>
 <a id="a5004a83c22f7c858065adb0433879c87" name="a5004a83c22f7c858065adb0433879c87"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5004a83c22f7c858065adb0433879c87">&#9670;&#160;</a></span>handleRequest()</h2>
