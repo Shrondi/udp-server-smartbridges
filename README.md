@@ -21,7 +21,10 @@ Servidor UDP concurrente y no bloqueante para la recepción y gestión de los pa
 - [Formato de las tramas UDP](#formato-de-las-tramas-udp)
   - [Request frame](#request-frame)
   - [Response frame](#response-frame)
-- [Esquema de la base de datos](#esquema-de-la-base-de-datos)
+- [Base de datos](#base-de-datos)
+  - [Esquema](#esquema)
+    - [Creación](#creación)
+  - [Gestión de la base de datos](#gestión-de-la-base-de-datos)
 
 
 ## Información del proyecto
@@ -61,6 +64,8 @@ Consulta el archivo [`LICENSE`](LICENSE) para más detalles.
 - [CMake](https://cmake.org/) >= 3.10
 - [GCC](https://gcc.gnu.org/) o [Clang](https://clang.llvm.org/) (soporte C99)
 - [SQLite3](https://www.sqlite.org/index.html) y su desarrollo (`libsqlite3-dev` en Debian/Ubuntu)
+- [Python 3](https://www.python.org/) (opcional, solo para el script de gestión `db/databaseManager.py`)
+
 
 ## Compilación
 
@@ -120,28 +125,59 @@ Para más detalles sobre el protocolo o ejemplos de uso, consulta el código fue
   <tr><td align="center">47</td><td align="center">8</td><td><code>usecs</code></td><td>Timestamp (microsegundos, <code>uint64_t</code>)</td></tr>
 </table>
 
+## Base de datos
 
-## Esquema de la base de datos
+### Esquema
 
-El servidor utiliza una base de datos SQLite con la siguiente estructura principal:
+A continuación se muestra el diagrama de la tabla `sensors`:
 
-```sql
-CREATE TABLE sensors (
-    id INTEGER PRIMARY KEY,
-    firmware_version TEXT NOT NULL,
-    frequency INTEGER NOT NULL,
-    scale INTEGER NOT NULL,
-    threshold_stdv REAL NOT NULL,
-    enable INTEGER NOT NULL
-);
+```
++-------------------+-------------------+----------+-------------------------------+
+|      Campo        |      Tipo         | Clave    |        Descripción            |
++-------------------+-------------------+----------+-------------------------------+
+| id                | INTEGER           | PK       | Identificador único           |
+| name              | TEXT              |          | Nombre del sensor             |
+| firmware_version  | TEXT              |          | Versión del firmware          |
+| scale             | INTEGER           |          | Escala configurada            |
+| frequency         | INTEGER           |          | Frecuencia de muestreo        |
+| threshold_stdv    | REAL              |          | Umbral de desviación estándar |
+| enable            | BOOLEAN (0 o 1)   |          | Habilitado (1) o no (0)       |
++-------------------+-------------------+----------+-------------------------------+
 ```
 
+#### Creación
+
+Si necesitas crear la base de datos `devices.db` desde cero, puedes hacerlo fácilmente usando SQLite3 junto a `db/scheme-database.sql`
+
+```bash
+cd db
+sqlite3 devices.db < scheme-database.sql
+```
+
+Esto generará el archivo `devices.db` con la tabla `sensors` lista para ser utilizada por el servidor y las utilidades de gestión.
+
 - <b>id</b>: Identificador único del sensor.
+- <b>name</b>: Nombre del sensor.
 - <b>firmware_version</b>: Versión del firmware del sensor.
-- <b>frequency</b>: Frecuencia de muestreo/configuración.
 - <b>scale</b>: Escala configurada para el sensor.
+- <b>frequency</b>: Frecuencia de muestreo/configuración.
 - <b>threshold_stdv</b>: Umbral de desviación estándar.
 - <b>enable</b>: Indica si el sensor está habilitado (1) o no (0).
+
+
+### Gestión de la base de datos
+
+En la carpeta `db/` se proporciona el script `databaseManager.py` para la gestión directa de la base de datos:
+  - Insertar, borrar, listar y modificar sensores.
+  - Habilitar/deshabilitar todos los sensores.
+  - Cambiar la versión de firmware de todos los sensores.
+
+Para usar el gestor desde terminal:
+
+```bash
+cd db
+python3 databaseManager.py
+```
 
 
 <p align="right"><sub><em>Este repositorio corresponde a un módulo/parte del proyecto principal <b>SMART-BRIDGES</b>.</em></sub></p>
