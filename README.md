@@ -88,6 +88,11 @@ Ejecuta el servidor UDP con:
 
 El servidor escuchará por defecto en el puerto `24243` (puedes modificarlo en `config/udp_config.c`).
 
+> **Ubicación del archivo de la base de datos:**  
+> El archivo `devices.db` debe encontrarse en la ruta especificada en `config/udp_config.c` (por defecto, `~/database-sensors/devices.db`).  
+> - Si usas `~`, asegúrate de que corresponde al directorio home del usuario que ejecuta el servidor.  
+> - Si la ruta es absoluta, verifica que el archivo exista en esa ubicación y que el usuario del servidor tenga permisos de lectura y escritura.
+
 Asegúrate de que el archivo de base de datos `devices.db` esté presente en el directorio raíz o ajusta la ruta en la configuración.
 
 ## Funcionamiento e información
