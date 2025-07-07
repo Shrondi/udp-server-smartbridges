@@ -9,8 +9,6 @@
 #include <stdio.h>
 #include <time.h>
 
-#define TAG_UDP "[UDP]"
-
 /**
  * @brief Imprime un mensaje informativo con timestamp en stdout.
  * @param message Mensaje a imprimir.
