@@ -34,8 +34,8 @@ void handleRequest(Request *request) {
     logMessage(logbuf);
 
     sqlite3 *db = NULL;
-    if (sqlite3_open(SQLITE_DB_PATH, &db) != SQLITE_OK) {
-        logError("SQLite open", sqlite3_errmsg(db));
+    if (sqlite3_open_v2(SQLITE_DB_PATH, &db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL) != SQLITE_OK) {
+        logError("SQLite open_v2", sqlite3_errmsg(db));
         return;
     }
 
