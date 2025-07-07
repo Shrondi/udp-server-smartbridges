@@ -6,7 +6,7 @@ import csv
 import os
 from contextlib import contextmanager
 
-DB_NAME = 'devices.db'
+DB_NAME = os.path.expanduser('~/database-sensors/devices.db')
 
 @contextmanager
 def db_connection(db_name=DB_NAME):
