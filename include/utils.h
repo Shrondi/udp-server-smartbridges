@@ -22,4 +22,12 @@ void logMessage(const char *message);
  */
 void logError(const char *context, const char *error);
 
+/**
+ * @brief Expande el símbolo ~ al directorio home del usuario si está presente al inicio de la ruta.
+ * @param input Ruta de entrada (puede empezar por ~)
+ * @param output Buffer de salida donde se almacena la ruta expandida
+ * @param out_size Tamaño del buffer de salida
+ */
+void expand_home(const char *input, char *output, size_t out_size);
+
 #endif // UTILS_H
