@@ -8,6 +8,6 @@
 #include "udp_config.h"
 
 const int UDP_PORT = 24243;
-const char *SQLITE_DB_PATH = "devices.db";
+const char *SQLITE_DB_PATH = "sqlite:////home/admin/database-sensors/devices.db";
 const int MAX_BUFFER_SIZE = 1024;
 const int MAX_EVENTS = 8;
