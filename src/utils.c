@@ -21,6 +21,6 @@ void logMessage(const char *message) {
  * @param error Descripción del error.
  */
 void logError(const char *context, const char *error) {
-    fprintf(stderr, "%s ERROR: %s - %s\n", TAG_UDP, context, error);
+    fprintf(stderr, "[UDP] ERROR: %s - %s\n", context, error);
     fflush(stderr);
 }
