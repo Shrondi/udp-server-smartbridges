@@ -5,17 +5,13 @@
 
 #include "utils.h"
 #include <stdio.h>
-#include <time.h>
 
 /**
  * @brief Imprime un mensaje informativo con timestamp en stdout.
  * @param message Mensaje a imprimir.
  */
 void logMessage(const char *message) {
-    time_t now = time(NULL);
-    char timebuf[64];
-    strftime(timebuf, sizeof(timebuf), "%Y-%m-%d %H:%M:%S", localtime(&now));
-    printf("%s [%s] %s\n", TAG_UDP, timebuf, message);
+    printf("[UDP] %s\n", message);
     fflush(stdout);
 }
 

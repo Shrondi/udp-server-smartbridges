@@ -17,12 +17,16 @@
 #include <string.h>
 #include <fcntl.h>
 
+#define SERVER_VERSION "1.0.1"
+
 /**
  * @brief Función principal. Inicializa y ejecuta el servidor UDP.
  * @return 0 en caso de éxito, otro valor en caso de error.
  */
 int main() {
-
+    char versionMsg[64];
+    snprintf(versionMsg, sizeof(versionMsg), "UDP Server SmartBridges v%s", SERVER_VERSION);
+    logMessage(versionMsg);
     logMessage("Starting UDP server...");
 
     int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
