@@ -33,8 +33,10 @@ void handleRequest(Request *request) {
     snprintf(logbuf, sizeof(logbuf), "REQ: dev.%d; ver.%s; sta: %s", sensorId, version, statusStr);
     logMessage(logbuf);
 
+    char db_path_expanded[512];
+    expand_home(SQLITE_DB_PATH, db_path_expanded, sizeof(db_path_expanded));
     sqlite3 *db = NULL;
-    if (sqlite3_open_v2(SQLITE_DB_PATH, &db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_URI, NULL) != SQLITE_OK) {
+    if (sqlite3_open_v2(db_path_expanded, &db, SQLITE_OPEN_READWRITE, NULL) != SQLITE_OK) {
         logError("SQLite open_v2", sqlite3_errmsg(db));
         return;
     }
